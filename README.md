@@ -1,69 +1,32 @@
-# Finimize Frontend Development Challenge
+# Finimize Code Test
 
-This repo is intended to be forked and uploaded to your own Github account in
-order to form the submission for the challenge. Once cloned, it will give you a basic server with a React app, so you don't have to spend time writing boilerplate code. Feel free to make any changes you wish - the existing code is purely intended to get you going faster.
+## Setup instructions
+1. First, run `git clone git@github.com:elliefarrer/finimize.git`
+2. Next run `cd ./finimize`
+3. Install the dependencies with `yarn`
+4. Run both the server and client with `yarn start`. Or, to run the server separately, do `yarn server`.
+5. To run the client-side unit tests, do `cd ./client` then `yarn test`
 
-## Run Instructions
+## How I approached the challenge
+Normally I like to approach the back end before building the front end, so this project was no different. My aim was to get some mock data returning from the server before working on the front end.
 
-To run the app, `cd` into the project root directory and run `yarn install` & `yarn start`
-(install Yarn [here](https://yarnpkg.com/en/docs/install)).
+Once I had enough of a UI to actually display the data, I went back to the back end and worked on building the logic to calculate the compound interest.
 
-Depending on your environment, you might need to install concurrently / Typescript globally.
+After doing this, I decided to do a couple more "extra" tasks, like form validation and neatening up the UI, before adding some front end unit tests at the end.
 
-There is one basic test written in the client, which you can run by performing
-`cd client` and then `yarn test`. If you want to add new client tests you can use Jest.
+Before I really started on the front end, however, I swapped Chakra for Material UI (because I'm more familiar with it). I'm using it with the styled-components engine and not the Emotion one as, again, I'm more familiar with styled-components.
 
-Mocha has been installed on the server to allow you to create server tests if you wish,
-although none have been written yet.
+I also had a think about swapping the CRA set up for a Next.js one, which would improve performance. However this would have taken quite a little while. I also thought about swapping the start-client script for Webpack or Vite, but dropped this idea due to time.
 
-## The challenge
+## What bits of the solution I like
+Firstly, I like that the compound interest is actually calculated on the back end, and my solution doesn't just use test data. It gives the back end more purpose. I also like how I've split some of the back end functions into `utils` functions that could definitely be reused.
 
-Create a web-app that shows how much you can expect to make from your savings over time.
+On the front end side, I like the Yup form validation, as it makes it much more user-friendly. I like that Context is used for state management, as this has saved a lot of prop-drilling. Finally, I like that Material UI is present, as it allows for greater flexibility when it comes to the design and content of the components.
 
-The app must satisfy the following Acceptance Criteria (ACs):
+## What bits of your solution I'd like to improve upon
+On the back end, I'd really like to add some validation too. I'd use `Joi` for this, however this is a package I have limited experience with so decided against it in the time. I'd also like to add some unit tests. I've only ever used Jest for testing (not Mocha), and found some `babel-jest` issues when I set it up, so dropped it for time.
 
-* It should allow the user to vary the initial savings amount, monthly deposit and interest rate through the UI
-* It should display how much the user's initial savings amount will be worth over the next 50 years.
-* You can just return mock/dummy data over the simple Node server that has been set-up for you. You don't have to write any "calculations" for the backend, just return mock data to give whatever functionality you want in the frontend. You won't be scored on any server-side code!
+On the front end, I'd ideally like to swap the set up for a Next.js one. It would be nice to actually test the axios request in the unit tests as well (perhaps by using MSWJS), instead of just using a test context component. The UI could also be prettier, and more mobile-friendly.
 
-### Our Guidance
-
-The challenge should not take any more than 2-3 hours. You do not need to complete the challenge in one go.
-
-These are some qualities we value:
- * Well-modularised, robust and clearly-written code
- * Maintainability. Another team member should be able to easily work with your code after you've finished. 
- * Single Responsibility Principle
- * A well-organised codebase. You should think about how your codebase might grow as the project becomes more complex
-
-The UI has been started, as well as some simple setup logic on the server. How you connect these and structure logic is up to you! Feel free to make changes to any of the code provided (including the UI) if you wish.
-
-We have chosen to include a basic design system on the client, to give you an idea of how we like to build UIs. For this challenge we have used [Chakra JS](https://chakra-ui.com/docs/getting-started). 
-
-Other than the above AC, feel free to take the challenge in any direction you feel best showcase your strengths!
-
-**Once complete**, please drop us a brief note (either an email, or in the readme somewhere) explaining:
-* How you approached the challenge
-* What bits of your solution you like
-* What bits of your solution you’d like to improve upon
-
-Any images/gifs of the finished product would be helpful too!
-
-### Tooling
-
-The frontend contains some tooling you might be familiar with
-
-#### Typescript
-
-If you like to use Typescript in your workflow, you should get any client warnings/errors appear in your terminal after running `yarn start`.
-
-You can also run the server types using `yarn types`.
-
-We believe strong TS typing will make your code much more robust.
-
-#### Prettier
-
-We believe Prettier makes your life easier! There is an example .prettierrc included in the `frontend` directory - feel free to tweak the settings if you'd prefer.
-
-You might need to give your IDE a nudge to pick the settings up - [here's an example](https://stackoverflow.com/a/58669550/4388938) of how to do that with VS Code
-
+## Visuals
+![Example of the finished task]('https://./../example.gif')
