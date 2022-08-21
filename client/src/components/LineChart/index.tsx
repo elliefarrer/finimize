@@ -1,7 +1,7 @@
 import { ChartLegendOptions, ChartOptions } from 'chart.js'
 import React from 'react'
 import { Line } from 'react-chartjs-2'
-import theme from '../theme'
+import { useTheme, Box } from '@mui/material';
 
 type Props = {
     xAxisData: number[] | string[]
@@ -12,6 +12,8 @@ type Props = {
 }
 
 const LineChart = ({ xAxisData, yAxisData, title, xLabel, yLabel }: Props) => {
+    const { palette: { primary } } = useTheme();
+
     const legendOptions: ChartLegendOptions = {
         display: false,
     }
@@ -40,20 +42,22 @@ const LineChart = ({ xAxisData, yAxisData, title, xLabel, yLabel }: Props) => {
     }
 
     return (
-        <Line
-            data={{
-                labels: xAxisData,
-                datasets: [
-                    {
-                        backgroundColor: theme.colors.blue100,
-                        borderColor: theme.colors.primary,
-                        data: yAxisData,
-                    },
-                ],
-            }}
-            options={options}
-            legend={legendOptions}
-        />
+        <Box width="60%" margin="0 auto">
+            <Line
+                data={{
+                    labels: xAxisData,
+                    datasets: [
+                        {
+                            backgroundColor: primary.light,
+                            borderColor: primary.main,
+                            data: yAxisData,
+                        },
+                    ],
+                }}
+                options={options}
+                legend={legendOptions}
+            />
+        </Box>
     )
 }
 
