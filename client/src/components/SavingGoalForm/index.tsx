@@ -31,11 +31,11 @@ const SavingGoalForm = () => {
     })
 
     return (
-        <StyledFormContainer>
+        <StyledFormContainer data-testid="savingGoalForm">
             <Box mb={5}>
                 <Typography variant="h1" component="h1">Saving goals</Typography>
             </Box>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} data-testid="form">
                 <FormInput
                     name="initialSavingsAmount"
                     label="Amount you're starting with (£)"

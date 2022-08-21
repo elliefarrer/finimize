@@ -42,7 +42,7 @@ const LineChart = ({ xAxisData, yAxisData, title, xLabel, yLabel }: Props) => {
     }
 
     return (
-        <Box width="60%" margin="0 auto">
+        <Box width="60%" margin="0 auto" mt={5} data-testid="lineChart">
             <Line
                 data={{
                     labels: xAxisData,
