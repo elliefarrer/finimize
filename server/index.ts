@@ -1,7 +1,12 @@
 import express from "express";
+const bodyParser = require('body-parser')
 const router = require('./routes/savingGoals.route');
 
 const app = express();
+
+app.use(bodyParser.urlencoded({ extended: false }))
+
+app.use(bodyParser.json())
 
 app.set("port", process.env.PORT || 3001);
 

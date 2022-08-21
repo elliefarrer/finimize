@@ -11,10 +11,13 @@ const SavingGoalForm = () => {
         initialValues: {
             initialSavingsAmount: 0,
             monthlySavingsAmount: 0,
-            yearlyInterestRate: 0
+            yearlyInterestRate: '0'
         },
-        onSubmit: () => {
-            axios.post(`http://localhost:3001/api/saving-goals`)
+        onSubmit: (values) => {
+            axios.post(`http://localhost:3001/api/saving-goals`, {
+                ...values,
+                yearlyInterestRate: parseFloat(values.yearlyInterestRate)
+            })
                 .then(({ data }) => setYearlySavingPrediction(data))
                 .catch((err) => console.log('err', err))
         }
@@ -40,6 +43,7 @@ const SavingGoalForm = () => {
                     name="yearlyInterestRate"
                     label="Yearly interest (%)"
                     handleChange={handleChange}
+                    type="text"
                 />
 
                 <Button type="submit" variant="outlined">Calculate my saving prediction</Button>

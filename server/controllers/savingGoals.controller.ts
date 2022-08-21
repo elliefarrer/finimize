@@ -1,18 +1,28 @@
 import { Request, Response, NextFunction } from 'express';
 const { getCurrentYear } = require('../utils/date');
+const { getAmountWithInterest } = require('../utils/finance');
 
 const postSavingGoal = async (req: Request, res: Response, next: NextFunction) => {
-    const returnObject = Array.from({ length: 50 }).map((_, i) => {
+
+    const returnArray: Array<{
+        year: number;
+        savingAmount: number;
+    }> = [];
+
+    Array.from({ length: 50 }).forEach((_, i) => {
         const yearIndex = i + 1;
 
-        // TODO: calculate this properly
-        return {
+        const startAmount = returnArray[returnArray.length - 1]?.savingAmount || req.body.initialSavingsAmount;
+
+        const totalWithoutInterest = startAmount + (req.body.monthlySavingsAmount * 12);
+
+        returnArray.push({
             year: getCurrentYear() + yearIndex,
-            savingAmount: yearIndex * 2
-        }
+            savingAmount: getAmountWithInterest(totalWithoutInterest, req.body.yearlyInterestRate)
+        })
     })
 
-   res.json(returnObject);
+   res.json(returnArray);
    next();
 }
 
