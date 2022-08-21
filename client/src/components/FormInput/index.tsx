@@ -6,7 +6,8 @@ const FormInput: FC<{
     name: string;
     label: string;
     handleChange: (e: ChangeEvent<any>) => void;
-}> = ({ type = 'number', name, label, handleChange }) => (
+    error?: string | false;
+}> = ({ type = 'number', name, label, handleChange, error }) => (
     <Box mb={5}>
         <TextField
             variant="standard"
@@ -14,6 +15,8 @@ const FormInput: FC<{
             name={name}
             label={label}
             onChange={handleChange}
+            error={!!error}
+            helperText={error}
         />
     </Box>
 )

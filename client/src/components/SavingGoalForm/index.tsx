@@ -2,25 +2,31 @@ import React, { useContext } from 'react';
 import { useFormik } from 'formik';
 import { Typography, Button } from '@mui/material';
 import axios from 'axios';
+import * as Yup from 'yup';
 import { SavingGoalContext } from '../../context';
 import { FormInput } from '..';
 
 const SavingGoalForm = () => {
     const { setYearlySavingPrediction } = useContext(SavingGoalContext);
-    const { handleSubmit, handleChange } = useFormik({
+    const { handleSubmit, handleChange, errors, touched } = useFormik({
         initialValues: {
-            initialSavingsAmount: 0,
-            monthlySavingsAmount: 0,
-            yearlyInterestRate: '0'
+            initialSavingsAmount: undefined,
+            monthlySavingsAmount: undefined,
+            yearlyInterestRate: undefined
         },
         onSubmit: (values) => {
             axios.post(`http://localhost:3001/api/saving-goals`, {
                 ...values,
-                yearlyInterestRate: parseFloat(values.yearlyInterestRate)
+                yearlyInterestRate: values.yearlyInterestRate ? parseFloat(values.yearlyInterestRate) : undefined,
             })
                 .then(({ data }) => setYearlySavingPrediction(data))
                 .catch((err) => console.log('err', err))
-        }
+        },
+        validationSchema: Yup.object().shape({
+            initialSavingsAmount: Yup.number().required('Please enter the amount you\'re starting with'),
+            monthlySavingsAmount: Yup.number().required('Please enter the amount you\'re saving each month'),
+            yearlyInterestRate: Yup.string().required('Please enter the yearly interest rate').test('yearlyInterestRate', 'Please enter a valid yearly interest rate', (val) => !isNaN(val as any))
+        })
     })
 
     return (
@@ -31,12 +37,14 @@ const SavingGoalForm = () => {
                     name="initialSavingsAmount"
                     label="Amount you're starting with (£)"
                     handleChange={handleChange}
+                    error={touched.initialSavingsAmount && errors.initialSavingsAmount}
                 />
 
                 <FormInput
                     name="monthlySavingsAmount"
                     label="Amount you're saving each month (£)"
                     handleChange={handleChange}
+                    error={touched.monthlySavingsAmount && errors.monthlySavingsAmount}
                 />
 
                 <FormInput
@@ -44,6 +52,7 @@ const SavingGoalForm = () => {
                     label="Yearly interest (%)"
                     handleChange={handleChange}
                     type="text"
+                    error={touched.yearlyInterestRate && errors.yearlyInterestRate}
                 />
 
                 <Button type="submit" variant="outlined">Calculate my saving prediction</Button>
