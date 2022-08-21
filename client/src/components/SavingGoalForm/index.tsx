@@ -1,16 +1,23 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useFormik } from 'formik';
 import { Typography, Button } from '@mui/material';
+import axios from 'axios';
+import { SavingGoalContext } from '../../context';
 import { FormInput } from '..';
 
 const SavingGoalForm = () => {
+    const { setYearlySavingPrediction } = useContext(SavingGoalContext);
     const { handleSubmit, handleChange } = useFormik({
         initialValues: {
             initialSavingsAmount: 0,
             monthlySavingsAmount: 0,
             yearlyInterestRate: 0
         },
-        onSubmit: (values) => console.log('values', values)
+        onSubmit: () => {
+            axios.post(`http://localhost:3001/api/saving-goals`)
+                .then(({ data }) => setYearlySavingPrediction(data))
+                .catch((err) => console.log('err', err))
+        }
     })
 
     return (
