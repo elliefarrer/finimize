@@ -39,6 +39,10 @@ const GlobalStyle = createGlobalStyle`
     .App-link {
         color: #61dafb;
     }
+
+    .MuiFormControl-root {
+        width: 60%;
+    }
 `
 
 export default GlobalStyle

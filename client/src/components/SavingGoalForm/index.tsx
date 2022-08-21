@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
 import { useFormik } from 'formik';
-import { Typography, Button } from '@mui/material';
+import { Typography, Button, Box } from '@mui/material';
 import axios from 'axios';
 import * as Yup from 'yup';
 import { SavingGoalContext } from '../../context';
 import { FormInput } from '..';
+import { StyledFormContainer } from './index.styled';
 
 const SavingGoalForm = () => {
     const { setYearlySavingPrediction } = useContext(SavingGoalContext);
@@ -30,8 +31,10 @@ const SavingGoalForm = () => {
     })
 
     return (
-        <>
-            <Typography variant="h1" component="h1">Saving goals</Typography>
+        <StyledFormContainer>
+            <Box mb={5}>
+                <Typography variant="h1" component="h1">Saving goals</Typography>
+            </Box>
             <form onSubmit={handleSubmit}>
                 <FormInput
                     name="initialSavingsAmount"
@@ -57,7 +60,7 @@ const SavingGoalForm = () => {
 
                 <Button type="submit" variant="outlined">Calculate my saving prediction</Button>
             </form>
-        </>
+        </StyledFormContainer>
     )
 }
 
